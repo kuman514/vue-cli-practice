@@ -1,17 +1,17 @@
 <template>
   <div class="write-memo">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MemoWriter/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import MemoWriter from '@/components/MemoWriter.vue'
 
 export default {
-  name: 'Home',
+  name: 'WriteAMemo',
   components: {
-    HelloWorld
+    MemoWriter
   }
 }
 </script>
