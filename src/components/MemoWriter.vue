@@ -1,11 +1,13 @@
 <template>
-  <div class="memowriter">
+  <form class="memowriter">
     <input v-model="memoContent">
     <button v-on:click="onSubmitMemo">Add</button>
-  </div>
+  </form>
 </template>
 
 <script>
+import store from '../store/index';
+
 export default {
   name: 'MemoWriter',
   data() {
@@ -14,8 +16,11 @@ export default {
     };
   },
   methods: {
-    onSubmitMemo() {
-      console.log(this.memoContent);
+    onSubmitMemo(event) {
+      event.preventDefault();
+      store.commit('addMemo', this.memoContent);
+      store.dispatch('saveMemosToStorage');
+      this.memoContent = '';
     }
   }
 }
