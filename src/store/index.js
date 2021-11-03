@@ -4,10 +4,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const initMemos = localStorage.getItem('memos');
+const finalInitMemos = ((initMemos !== null && initMemos !== undefined && initMemos !== 'null' && initMemos !== 'undefined') ? JSON.parse(initMemos) : []);
 
 export default new Vuex.Store({
   state: {
-    memos: (initMemos ? JSON.parse(initMemos) : [])
+    memos: finalInitMemos
+  },
+  getters: {
+    memos (state) {
+      return state.memos;
+    }
   },
   mutations: {
     addMemo (state, memoContent) {
@@ -33,7 +39,17 @@ export default new Vuex.Store({
   },
   actions: {
     saveMemosToStorage (state) {
-      const content = JSON.stringify(state.memos);
+      // Unlike in mutations, why does it work when I wrote "state.state.memos", not when "state.memos"?
+
+      // console.log(state) showed me this below
+      //
+      // state
+      // └ ... (Other members)
+      // └ state
+      //   └ ... (Other members)
+      //   └ memos
+
+      const content = JSON.stringify(state.state.memos);
       localStorage.setItem('memos', content);
     }
   },
