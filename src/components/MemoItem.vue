@@ -1,6 +1,7 @@
 <template>
   <span>
     {{ memoContnet }}
+    <button class="deletebutton">❌</button>
   </span>
 </template>
 

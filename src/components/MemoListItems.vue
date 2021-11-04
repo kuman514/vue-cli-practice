@@ -1,6 +1,6 @@
 <template>
-  <ul class="memolistitems">
-    <li v-for="memoItem in memoItems" v-bind:key="memoItem.id">
+  <ul class="memolistitems" v-on:click="onClickDeleteButton">
+    <li v-for="memoItem in memoItems" v-bind:key="memoItem.id" v-bind:id="memoItem.id">
       <MemoItem :memoContnet="memoItem.content"/>
     </li>
   </ul>
@@ -19,6 +19,18 @@ export default {
   },
   components: {
     MemoItem
+  },
+  methods: {
+    onClickDeleteButton(event) {
+      event.preventDefault();
+      if (event.target.className !== 'deletebutton') {
+        return;
+      }
+
+      store.commit('removeMemo', event.target.closest('li').id);
+      store.dispatch('saveMemosToStorage');
+      this.memoItems = store.getters.memos;
+    }
   }
 }
 </script>
